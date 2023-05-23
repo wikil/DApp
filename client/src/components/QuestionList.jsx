@@ -34,7 +34,9 @@ export const Question = ({question}) =>{
                     <Grid item lg={11} className='left'>
                         <span> <Button startIcon={<ThumbUpIcon/>} variant='text'>{question.likes}</Button>&nbsp;</span>
                         <span><ForumIcon/> {question.total_answers} &nbsp;</span>
-                        <span><CalendarMonthIcon/> {Utils.DateConvertor(question.created_on)}</span>
+                        {/* <span><CalendarMonthIcon/> {Utils.DateConvertor(question.created_on)}</span> */}
+                        <span><CalendarMonthIcon/> 2023/05/08</span>
+
                     </Grid>
                     <Grid item lg={1} className='right'>
                         <IconButton><ShareIcon/></IconButton>
@@ -70,7 +72,7 @@ function QuestionList() {
             questions && questions.length?
             questions.map((question, index) => <Question question={question} key={index}/> )
             : <Container className='no-questions'>
-                Looks like there are no questions yet
+                看起来还没有人提问
             </Container>        
         : <Loader></Loader> 
         }

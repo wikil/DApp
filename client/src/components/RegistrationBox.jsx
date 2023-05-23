@@ -35,8 +35,8 @@ function RegistrationBox() {
 
     return (
         <Container maxWidth={false} className="landing-left-registration-box">
-            <TextField id="outlined-basic" fullWidth placeholder="Enter your name here" variant="outlined" className="input" value={name} onChange={(e)=>{setName(e.target.value)}} />
-            <Button variant="contained" className="button" onClick={handleRegister}>Get Started</Button>
+            <TextField id="outlined-basic" fullWidth placeholder="用户名" variant="outlined" className="input" value={name} onChange={(e)=>{setName(e.target.value)}} />
+            <Button variant="contained" className="button" onClick={handleRegister}>注册</Button>
         </Container>        
     )
 }

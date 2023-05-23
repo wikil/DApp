@@ -21,8 +21,8 @@ function Landing() {
         <Container maxWidth={false} className="landing">
             <Grid container maxHeight={false}>
                 <Grid item lg={6} sm={12} className="landing-left">
-                    <Typography variant="h1" className="landing-left-heading">De-Quora</Typography>
-                    <Typography variant="h3" className="landing-left-subheading">A decentralized discussion forum</Typography>
+                    <Typography variant="h1" className="landing-left-heading">去中心化问答社区</Typography>
+                    <Typography variant="h3" className="landing-left-subheading">Decentralized Q&A Community</Typography>
                    <RegistrationBox></RegistrationBox>
                 </Grid>
                 <Grid item lg={6} sm={12} className="landing-right">

@@ -11,8 +11,10 @@ function QuestionBox({question}) {
       <Typography variant='h4' fontWeight='bold'>{question.question}</Typography>
       <Container maxWidth={false} className='info'>
         <span> <ThumbUpIcon/> {question.likes}</span>
-        <span> <CalendarMonthIcon/> {Utils.DateConvertor(question.created_on)}</span>
-        <span> 
+        {/* <span> <CalendarMonthIcon/> {Utils.DateConvertor(question.created_on)}</span> */}
+        <span> <CalendarMonthIcon/> 2023/05/08</span>
+
+        <span>
           <Avatar 
             src={`https://robohash.org/${question.author_address}`}
             sx={{ width: 24, height: 24 }}

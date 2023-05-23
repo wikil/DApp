@@ -1,18 +1,18 @@
 @import 'variables';
 .navbar {
-    background-color: $background-primary;
+    background-color: #61c2ef;
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     &-heading {
         color: $text-color-primary;
         font-weight: bolder;
-        font-size: 2em;
+        font-size: 3em;
         cursor: pointer;
         width: fit-content;
     }
     &-menu {
         &-button {
-            border-radius: 50%;
+            border-radius: 80%;
         }
     }
 }

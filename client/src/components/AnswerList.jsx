@@ -38,9 +38,9 @@ function Answer({answer}){
 function AnswerList({answers}) {
   return (
     <Container maxWidth={false} className='question-answer-list'>
-      <Typography variant='h5' fontWeight='bold'>{answers && answers.length} Answers</Typography>
+      <Typography variant='h5' fontWeight='bold'>{answers && answers.length} 回答数</Typography>
       <hr />
-      {answers && answers.length? answers.map(answer => <Answer answer={answer}/>) : <p>No answers yet</p>}
+      {answers && answers.length? answers.map(answer => <Answer answer={answer}/>) : <p>还没有回答</p>}
     </Container>
   )
 }

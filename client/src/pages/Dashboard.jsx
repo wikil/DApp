@@ -36,20 +36,22 @@ function Dashboard() {
     <Container maxWidth={false} className='dashboard'>
       <Grid container spacing={8} className="dashboard-top" justifyContent="center">
         <Grid item lg={7} sm={12}>
-          <Typography variant="h3" className="dashboard-top-text">Welcome <strong>{name}</strong> </Typography>
+          <Typography variant="h3" className="dashboard-top-text">欢迎： <strong>{name}</strong> </Typography>
           <Typography variant="p" fontSize="large">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi totam tenetur modi magni perferendis? Cumque mollitia eligendi rem non! Quas quibusdam ex impedit incidunt iste dicta quisquam iure voluptas voluptates!
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi totam tenetur modi magni perferendis? Cumque mollitia eligendi rem non! Quas quibusdam ex impedit incidunt iste dicta quisquam iure voluptas voluptates!
+          "信息就是力量。但就像所有力量一样，有些人只想占为己有。世界上所有的科学和文化遗产，已在书籍和期刊上发布了数个世纪，正渐渐地被少数私有的公司数字化并上锁。那些能够获取这些资源的人，你有责任将它与世界分享"
+          </Typography>
+          <Typography variant="p" fontSize="large">
+          "书写出来并不是为了藏在高墙之后，而是为了向世界传播，激励和启发世人"
           </Typography>
         </Grid>
-        <Grid item lg={4} sm={12}> <DashboardTopVector className="dashboard-top-vector"></DashboardTopVector> </Grid>
+        {/* <Grid item lg={4} sm={12}> <DashboardTopVector className="dashboard-top-vector"></DashboardTopVector> </Grid> */}
       </Grid>
       <Container justifyContent='center' className='dashboard-mid' maxWidth="md">
         <Typography variant='h5' textAlign='center'>
-          Start your own discussion and lead it by 
-          <Link href="/new" underline="none" fontWeight="bold" className="dashboard-mid-link"> creating a question here</Link>
+          有疑惑吗?
+          <Link href="/new" underline="none" fontWeight="bold" className="dashboard-mid-link"> 发起你的问题</Link>
           <br/>
-          Want to contribute already? Search for your desired question below and start contributing in the discussion right away by answering them
+          或者贡献你的智慧！
         </Typography>
       </Container>
       <QuestionList></QuestionList>

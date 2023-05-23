@@ -19,7 +19,7 @@ function AddAnswer({questionId}) {
         <Container maxWidth={false} className='question-answer-input'>
             <TextField 
                 fullWidth
-                label="Answer the question here"
+                label="在这里编辑回答"
                 margin="normal"
                 multiline
                 minRows={5}
@@ -27,7 +27,7 @@ function AddAnswer({questionId}) {
                 onChange={(e)=>{setAnswer(e.target.value)}}
                 fontSize='large'
             />
-            <Button variant="contained" onClick={addAnswer}>Answer</Button>
+            <Button variant="contained" onClick={addAnswer}>点击发布</Button>
         </Container>
     )
 }

@@ -33,7 +33,7 @@ function Question() {
             <AddAnswer questionId={params.questionId}></AddAnswer>
             <AnswerList answers={answers}></AnswerList>
         </Container>
-        : <p>Loading...</p>
+        : <p>Loading...please wait</p>
     )
 }
 

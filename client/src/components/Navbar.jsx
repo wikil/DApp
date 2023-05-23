@@ -25,20 +25,20 @@ function Navbar() {
       <Grid container>
         <Grid item lg={11}>
           <Link href="/dashboard" color="white" underline="none" className='navbar-text'>
-            <Typography variant="h4" className="navbar-heading">De-Quora</Typography>
+            <Typography variant="h4" className="navbar-heading">去中心化问答社区</Typography>
           </Link>
         </Grid>
         <Grid item lg={1}>
           <PopupState variant="popover" popupId="demo-popup-menu">
             {(popupState) => (
-              <React.Fragment className='navbar-menu'>
-                <IconButton variant="outlined" {...bindTrigger(popupState)} className='navbar-menu-button'>
-                  <Avatar src={`https://wwww.robohash.org/${account}`}></Avatar>
-                </IconButton>
-                <Menu {...bindMenu(popupState)}>
-                  <MenuItem> <Link href={`/profile/${account}`} underline='none' color='black'>Profile</Link> </MenuItem>
-                </Menu>
-              </React.Fragment>
+              <React.Fragment>
+              <IconButton variant="outlined" {...bindTrigger(popupState)} className='navbar-menu-button'>
+                <Avatar src={`https://wwww.robohash.org/${account}`}></Avatar>
+              </IconButton>
+              <Menu {...bindMenu(popupState)}>
+                <MenuItem> <Link href={`/profile/${account}`} underline='none' color='black'>Profile</Link> </MenuItem>
+              </Menu>
+            </React.Fragment>
             )}
           </PopupState>
         </Grid>

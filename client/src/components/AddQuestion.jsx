@@ -23,14 +23,14 @@ function AddQuestion() {
     <Container maxWidth={false} padding={0}>
         <TextField 
             fullWidth 
-            label="Write your question here" 
+            label="在这里编辑问题" 
             id="fullWidth" 
             margin="normal" 
             multiline 
             minRows={4} 
             onChange={(e)=>{setQuestionText(e.target.value)}} 
             value={questionText} 
-            helperText="Try to keep the question straight and to-the-point. Include as many keywords as possible for better reach."
+            helperText="请注意提问的艺术"
             fontSize="large"
             InputProps={{
                 style:{
@@ -43,7 +43,7 @@ function AddQuestion() {
                 }
             }}
         />
-        <Button variant="contained" onClick={addQuestion}>Add Question</Button>
+        <Button variant="contained" onClick={addQuestion}>点击发布</Button>
     </Container>
     )
 }
