@@ -1,0 +1,18 @@
+@import 'variables';
+.navbar {
+    background-color: $background-primary;
+    width: 100%;
+    padding: 10px;
+    &-heading {
+        color: $text-color-primary;
+        font-weight: bolder;
+        font-size: 2em;
+        cursor: pointer;
+        width: fit-content;
+    }
+    &-menu {
+        &-button {
+            border-radius: 50%;
+        }
+    }
+}

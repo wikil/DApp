@@ -1,0 +1,16 @@
+@import 'variables';
+.dashboard {
+    min-height: 100vh;
+    &-top {
+        margin-top: 0px;
+        &-text {
+            margin-top: 0.8em !important;
+        }
+    }
+    &-mid {
+        margin-top: 2em;
+        &-link {
+            color: $text-color-secondary;
+        }
+    }
+}
