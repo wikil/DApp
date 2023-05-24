@@ -7,8 +7,8 @@ function Footer(){
         <Container maxWidth={false} fullWidth className='footer'>
             <Typography variant='h6' className='footer-content'>
                 Made by 
-                <span className='name'> Kailash Kejriwal</span> &nbsp;
-                <Link href="https://www.github.com/kailash360" target="_blank" color='#fff' underline='none'> <GitHubIcon fontSize='large' style={{verticalAlign: 'middle'}}/></Link>
+                <span className='name'> Sun Jun</span> &nbsp;
+                <Link href="https://www.github.com/" target="_blank" color='#fff' underline='none'> <GitHubIcon fontSize='large' style={{verticalAlign: 'middle'}}/></Link>
             </Typography>
         </Container>
     )

@@ -7,16 +7,26 @@ contract DeQuora is ERC721 {
      * @notice NFT铸造部分
      */
 
+    //NFT相关状态变量
+    mapping(address => uint256) private _balances;
+    mapping(uint256 => address) private _owners;
+    mapping(uint256 => Answer) private NFT_answers;
+    
+    uint256 public NFT_id_generator = 0; // global unique answer id
+
+
     function balanceOf(
         address _owner
     ) public view override returns (uint256 _balance) {
         // 1. 在这里返回 `_owner` 拥有的NFT数
+        return _balances[_owner];
     }
 
     function ownerOf(
         uint256 _tokenId
     ) public view override returns (address _owner) {
         // 2. 在这里返回 `_tokenId` 的所有者
+        
     }
 
     function transfer(address _to, uint256 _tokenId) public override {}
@@ -81,6 +91,7 @@ contract DeQuora is ERC721 {
     struct Answer {
         uint256 id;
         uint256 question_id;
+        uint256 NFT_id;
         string answer;
         string author_name;
         address author_address;
@@ -100,12 +111,12 @@ contract DeQuora is ERC721 {
 
     uint256 public total_users;
     uint256 public total_questions; // question count
+    
+
     mapping(address => User) public users;
     mapping(uint256 => Answer[]) public answers; //question id to answers
     Question[] public questions; // all questions
     Answer[] answers_array;
-    // uint256[] arr;
-
     event new_user_added(User);
     event main_deployed(string);
     event question_added(Question);
@@ -225,6 +236,7 @@ contract DeQuora is ERC721 {
         Answer memory answer = Answer(
             question.total_answers,
             _question_id,
+            NFT_id_generator, // 添加NFT token
             _answer,
             users[msg.sender].name,
             msg.sender,
@@ -244,6 +256,13 @@ contract DeQuora is ERC721 {
         users[msg.sender].answers.push(answer.id);
 
         set_question(question, _question_id);
+
+        //NFT部分
+        NFT_answers[NFT_id_generator] = answer; // 将文章添加到NFT列表
+        _owners[NFT_id_generator] = msg.sender; // 默认作者为拥有者
+        _balances[msg.sender]++;
+        NFT_id_generator++; //NFT token生成器++
+
         return answer;
     }
 
