@@ -315,7 +315,7 @@ contract DeQuora is ERC721 {
     function like_answer(
         uint256 _question_id,
         uint256 _answer_id
-    ) public payable {
+    ) public payable returns(Answer memory){
         //获得Question
         (Question memory question, , ) = get_question(_question_id);
         //获得Answer
@@ -336,11 +336,12 @@ contract DeQuora is ERC721 {
         set_answer(_question_id, _answer_id, answer);
         set_question(question,_question_id);
         emit answer_liked(answer);
+        return answer;
     }
 
     function like_question(
         uint256 _question_id
-    ) public payable{
+    ) public payable returns(Question memory){
         (Question memory question, , ) = get_question(_question_id);
 
         // for (uint256 i = 0; i < question.liked_by.length; i++) {
@@ -357,6 +358,8 @@ contract DeQuora is ERC721 {
         set_question(question, _question_id);
 
         emit question_liked(question);
+
+        return question;
     }
 
     /**
@@ -367,7 +370,7 @@ contract DeQuora is ERC721 {
     function tip_answer(
         uint256 _question_id,
         uint256 _answer_id
-    ) public payable {
+    ) public payable returns(Answer memory){
         // 找到对应回答
         //获得Question
         (Question memory question, , ) = get_question(_question_id);
@@ -385,15 +388,19 @@ contract DeQuora is ERC721 {
         set_question(question, _question_id);
         // 调用事件
         emit answer_tipped(answer);
+
+        return answer;
     }
 
 
     // 对问题进行打赏
-    function tip_question(uint256 _question_id) public payable {
+    function tip_question(uint256 _question_id) public payable returns(Question memory){
         (Question memory question, , ) = get_question(_question_id);
         question.bonus_pool += msg.value;
         set_question(question,_question_id);
         emit question_tipped(question);
+
+        return question;
     }
 
     function dividing_question_bonus_pool(uint _question_id) public {

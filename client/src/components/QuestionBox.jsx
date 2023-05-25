@@ -4,6 +4,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ShareIcon from '@mui/icons-material/Share';
 import Utils from '../utils'
+import { ContractContext } from '../context/ContractContext'
 
 function QuestionBox({question}) {
   return (

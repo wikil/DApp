@@ -11,6 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Loader from '../components/Loader'
 
 export const Question = ({question}) =>{
+    const {DeQuora, Services} = React.useContext(ContractContext)
+    const likeQuestion = async() =>{
+        if(!Services) return
+
+        const response = await Services.like_question(question.id)
+    }
 
     return(
         <Container className='question' maxWidth='lg'>
@@ -32,7 +38,7 @@ export const Question = ({question}) =>{
                 </Grid>
                 <Grid item container lg={12} justifyContent='space-between' className='question-information'>
                     <Grid item lg={11} className='left'>
-                        <span> <Button startIcon={<ThumbUpIcon/>} variant='text'>{question.likes}</Button>&nbsp;</span>
+                        <span> <Button onClick={likeQuestion} startIcon={<ThumbUpIcon/>} variant='text'>{question.likes}</Button>&nbsp;</span>
                         <span><ForumIcon/> {question.total_answers} &nbsp;</span>
                         {/* <span><CalendarMonthIcon/> {Utils.DateConvertor(question.created_on)}</span> */}
                         <span><CalendarMonthIcon/> 2023/05/08</span>

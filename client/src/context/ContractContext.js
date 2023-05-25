@@ -138,7 +138,74 @@ function ContractContextProvider(props){
                 console.log('Error in adding answer: ', err)
                 return { success: false, message: err.message }
             }
+        },
+
+        like_answer: async(_question_id, _answer_id) =>{
+            try{
+                if(!state.DeQuora) return { success:true, data:{}}
+                console.log(`Like answer ${_answer_id} for question ${_question_id}`)
+                const likeAnswerResponse = await state.DeQuora.methods.like_answer(_question_id, _answer_id).send({
+                    from: account,
+                    gas: 3000000
+                })
+                console.log(likeAnswerResponse)
+                return { success: true, data:likeAnswerResponse}
+            }catch(err){
+                console.log('Error in like answer: ', err)
+                return { success: false, message: err.message }
+            }
+        },
+
+        like_question: async(_question_id) =>{
+            try{
+                if(!state.DeQuora) return { success:true, data:{}}
+                console.log(`Like question ${_question_id}`)
+                const likeQuestionResponse = await state.DeQuora.methods.like_question(_question_id).send({
+                    from: account,
+                    gas: 3000000
+                })
+                console.log(likeQuestionResponse)
+                return { success: true, data:likeQuestionResponse}
+            }catch(err){
+                console.log('Error in like question: ', err)
+                return { success: false, message: err.message }
+            }
+        },
+
+        tip_answer :async(_question_id, _answer_id) =>{
+            try{
+                if(!state.DeQuora) return { success:true, data:{}}
+                console.log(`Tip answer ${_question_id, _answer_id}`)
+                const tipAnswerResponse = await state.DeQuora.methods.tip_answer(_question_id,_answer_id).send({
+                    from: account,
+                    gas: 3000000,
+                    value: 10000
+                })
+                console.log(tipAnswerResponse)
+                return { success: true, data:tipAnswerResponse}
+            }catch(err){
+                console.log('Error in tip answer: ', err)
+                return { success: false, message: err.message }
+            }
+        },
+
+        tip_question :async(_question_id) =>{
+            try{
+                if(!state.DeQuora) return { success:true, data:{}}
+                console.log(`Tip question ${_question_id}`)
+                const tipQuestionResponse = await state.DeQuora.methods.tip_question(_question_id).send({
+                    from: account,
+                    gas: 3000000,
+                    value: 10000
+                })
+                console.log(tipQuestionResponse)
+                return { success: true, data:tipQuestionResponse}
+            }catch(err){
+                console.log('Error in tip question: ', err)
+                return { success: false, message: err.message }
+            }
         }
+
     }
 
     useEffect(async () => {
