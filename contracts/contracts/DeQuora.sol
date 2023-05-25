@@ -10,7 +10,7 @@ contract DeQuora is ERC721 {
     //NFT相关状态变量
     mapping(address => uint256) private _balances;
     mapping(uint256 => address) private _owners;
-    mapping(uint256 => Answer) private NFT_answers;
+    mapping(uint256 => uint[2]) private _NFT_answers; // NFT_id to question id and answerId
     
     uint256 public NFT_id_generator = 0; // global unique answer id
 
@@ -26,14 +26,22 @@ contract DeQuora is ERC721 {
         uint256 _tokenId
     ) public view override returns (address _owner) {
         // 2. 在这里返回 `_tokenId` 的所有者
-        
+        return _owners[_tokenId];
     }
 
-    function transfer(address _to, uint256 _tokenId) public override {}
+    function transfer(address _to, uint256 _tokenId) public override {
+        require(msg.sender == ownerOf(_tokenId));
+        _owners[_tokenId] = _to;
+        Answer memory NFT_answer= get_answer(_NFT_answers[_tokenId][0],_NFT_answers[_tokenId][1]);
+        NFT_answer.owner_address = _to;
+        set_answer(_NFT_answers[_tokenId][0], _NFT_answers[_tokenId][1],NFT_answer);
+    }
 
     function approve(address _to, uint256 _tokenId) public override {}
 
-    function takeOwnership(uint256 _tokenId) public override {}
+    function takeOwnership(uint256 _tokenId) public override {
+
+    }
 
     /**
      * @notice for code refactoring and upgrading by Joshua
@@ -109,12 +117,12 @@ contract DeQuora is ERC721 {
     //     Answer[] answers;
     // }
 
-    uint256 public total_users;
+    uint256 public total_users; //user count
     uint256 public total_questions; // question count
     
 
     mapping(address => User) public users;
-    mapping(uint256 => Answer[]) public answers; //question id to answers
+    mapping(uint256 => Answer[]) public answers; //question_id to answers
     Question[] public questions; // all questions
     Answer[] answers_array;
     event new_user_added(User);
@@ -122,7 +130,9 @@ contract DeQuora is ERC721 {
     event question_added(Question);
     event answer_tipped(Answer);
     event question_tipped(Question);
-
+    event answer_liked(Answer);
+    event question_liked(Question);
+    event question_bonus_divided(Question);
     constructor() {
         total_users = 0;
         total_questions = 0;
@@ -228,10 +238,10 @@ contract DeQuora is ERC721 {
     ) public payable returns (Answer memory) {
         require(bytes(_answer).length != 0, "Answer cannot be empty");
         (Question memory question, , ) = get_question(_question_id);
-        require(
-            question.author_address != msg.sender,
-            "Author cannot answer his/her own question"
-        );
+        // require(
+        //     question.author_address != msg.sender,
+        //     "Author cannot answer his/her own question"
+        // );
 
         Answer memory answer = Answer(
             question.total_answers,
@@ -258,7 +268,7 @@ contract DeQuora is ERC721 {
         set_question(question, _question_id);
 
         //NFT部分
-        NFT_answers[NFT_id_generator] = answer; // 将文章添加到NFT列表
+        _NFT_answers[NFT_id_generator] = [_question_id, answer.id]; // 将文章添加到NFT列表
         _owners[NFT_id_generator] = msg.sender; // 默认作者为拥有者
         _balances[msg.sender]++;
         NFT_id_generator++; //NFT token生成器++
@@ -278,6 +288,7 @@ contract DeQuora is ERC721 {
         for (uint256 i = 0; i < question.total_answers; i++) {
             if (answers[_question_id][i].id == _answer_id) {
                 answer = answers[_question_id][i];
+                break;
             }
         }
 
@@ -288,7 +299,7 @@ contract DeQuora is ERC721 {
         uint256 _question_id,
         uint256 _answer_id,
         Answer memory _answer
-    ) public returns (Question memory) {
+    ) public {
         //Get the question
         (Question memory question, , ) = get_question(_question_id);
 
@@ -298,57 +309,54 @@ contract DeQuora is ERC721 {
                 break;
             }
         }
-        return question;
+
     }
 
     function like_answer(
         uint256 _question_id,
-        uint256 _answer_id,
-        address _user_address
-    ) public returns (Answer memory) {
+        uint256 _answer_id
+    ) public payable {
         //获得Question
         (Question memory question, , ) = get_question(_question_id);
         //获得Answer
         Answer memory answer = get_answer(_question_id, _answer_id);
-        //检查该用户是否已点过赞
-        for (uint256 i = 0; i < answer.liked_by.length; i++) {
-            require(
-                answer.liked_by[i] != _user_address,
-                "You have already liked this answer"
-            );
-        }
-        //点赞
-        answer.liked_by[answer.likes] = _user_address;
+        //检查该用户是否已点过赞（会导致gas超出上限，待解决）
+        // for (uint256 i = 0; i < answer.liked_by.length; i++) {
+        //     require(
+        //         answer.liked_by[i] != msg.sender,
+        //         "You have already liked this answer"
+        //     );
+        // }
+        // 点赞
+        // answer.liked_by[answer.likes] = msg.sender;
         answer.likes++;
         question.expire += 30 days;
         answer.expire += 30 days;
         //更新
-        question = set_answer(_question_id, _answer_id, answer);
-        set_question(question, _question_id);
-
-        return answer;
+        set_answer(_question_id, _answer_id, answer);
+        set_question(question,_question_id);
+        emit answer_liked(answer);
     }
 
     function like_question(
-        uint256 _question_id,
-        address _user_address
-    ) public returns (Question memory) {
+        uint256 _question_id
+    ) public payable{
         (Question memory question, , ) = get_question(_question_id);
 
-        for (uint256 i = 0; i < question.liked_by.length; i++) {
-            require(
-                question.liked_by[i] != _user_address,
-                "You have already liked this question"
-            );
-        }
+        // for (uint256 i = 0; i < question.liked_by.length; i++) {
+        //     require(
+        //         question.liked_by[i] != msg.sender,
+        //         "You have already liked this question"
+        //     );
+        // }
 
-        question.liked_by[question.likes] = _user_address;
+        // question.liked_by[question.likes] = msg.sender;
         question.likes++;
         question.expire += 30 days;
 
         set_question(question, _question_id);
 
-        return question;
+        emit question_liked(question);
     }
 
     /**
@@ -366,30 +374,56 @@ contract DeQuora is ERC721 {
         //获得Answer
         Answer memory answer = get_answer(_question_id, _answer_id);
         // 找到作者
-        address payable _author = payable(answer.author_address);
+        address payable _author = payable(answer.owner_address);
         // 支付燃料费
         _author.transfer(msg.value);
         answer.bonus += msg.value; 
         question.expire += 30 days;
         answer.expire += 30 days;
         //更新
-        question = set_answer(_question_id, _answer_id, answer);
+        set_answer(_question_id, _answer_id, answer);
         set_question(question, _question_id);
         // 调用事件
         emit answer_tipped(answer);
     }
 
+
     // 对问题进行打赏
     function tip_question(uint256 _question_id) public payable {
         (Question memory question, , ) = get_question(_question_id);
-
+        question.bonus_pool += msg.value;
+        set_question(question,_question_id);
         emit question_tipped(question);
     }
 
-    function clean() private {
+    function dividing_question_bonus_pool(uint _question_id) public {
+        (Question memory question, , ) = get_question(_question_id);
+        // 对即将过期的问题瓜分奖金
+        // require(question.expire - 30 days <= block.timestamp); 
+        uint highest_liked_answer_id = 0;
+        uint highest_likes = 0;
+        for(uint i=0;i<answers[_question_id].length;i++){
+            if(answers[_question_id][i].likes >= highest_likes){
+                highest_liked_answer_id = answers[_question_id][i].id;
+                highest_likes = answers[_question_id][i].likes;
+            }
+        }
+        Answer memory answer = get_answer(_question_id,highest_liked_answer_id);
+        answer.bonus += question.bonus_pool;
+        payable(answer.owner_address).transfer(question.bonus_pool);
+        question.bonus_pool = 0;
+        
+        set_answer(_question_id,highest_liked_answer_id,answer);
+        set_question(question, _question_id);
+        emit question_bonus_divided(question);
+    }
+
+
+    function clean() public {
         for (uint256 i = 0; i < total_questions; i++) {
             Question memory q = questions[i];
             if (q.expire < block.timestamp) {
+                dividing_question_bonus_pool(q.id);
                 //将最后一个问题放到过期问题的位置
                 questions[i] = questions[total_questions - 1];
                 total_questions--;
