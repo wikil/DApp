@@ -18,6 +18,17 @@ export const Question = ({question}) =>{
         const response = await Services.like_question(question.id)
     }
 
+    const tipQuestion = async() =>{
+        if(!Services) return
+
+        const response = await Services.tip_question(question.id)
+    }
+    const date = new Date(question.created_on * 1000);
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+    const expireDate = new Date(question.expire * 1000);
+    const formattedExpireDate = `${expireDate.getFullYear()}-${(expireDate.getMonth() + 1).toString().padStart(2, '0')}-${expireDate.getDate().toString().padStart(2, '0')} ${expireDate.getHours().toString().padStart(2, '0')}:${expireDate.getMinutes().toString().padStart(2, '0')}:${expireDate.getSeconds().toString().padStart(2, '0')}`;
+
     return(
         <Container className='question' maxWidth='lg'>
             <Grid container direction = 'coloumn'>
@@ -41,11 +52,12 @@ export const Question = ({question}) =>{
                         <span> <Button onClick={likeQuestion} startIcon={<ThumbUpIcon/>} variant='text'>{question.likes}</Button>&nbsp;</span>
                         <span><ForumIcon/> {question.total_answers} &nbsp;</span>
                         {/* <span><CalendarMonthIcon/> {Utils.DateConvertor(question.created_on)}</span> */}
-                        <span><CalendarMonthIcon/> 2023/05/08</span>
+                        <span><CalendarMonthIcon/> From  {formattedDate}  To  {formattedExpireDate}</span>
 
                     </Grid>
                     <Grid item lg={1} className='right'>
-                        <IconButton><ShareIcon/></IconButton>
+                        <Button item lg={3} className='right'  fontSize='1.5em' onClick={tipQuestion}>{question.bonus_pool/1000000} ETH</Button>
+                        {/* <IconButton><ShareIcon/></IconButton> */}
                     </Grid>
                 </Grid>
             </Grid>

@@ -14,14 +14,23 @@ import Tab from '@mui/material/Tab';
 import PropTypes from 'prop-types';
 import {Question} from '../components/QuestionList'
 import Loader from '../components/Loader'
+import AnswerList from '../components/AnswerList'
 
 function UserQuestionList({questions}){
   return(
     questions && questions.length?
     questions.map(question=> <Question question={question} />):
-    <Container className='no-questions'>Looks like there are no questions yet</Container> 
+    <Container className='no-questions'>看起来似乎还没什么东西</Container> 
     )
 }
+
+// function UserAnswerList({answers}){
+//   return(
+//     answers && answers.length?
+//     answers.map(answer=> <Answer answer={answer} />):
+//     <Container className='no-questions'>看起来似乎还没什么东西</Container> 
+//     )
+// }
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -70,7 +79,9 @@ function TabSection({questions}){
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Questions" {...a11yProps(0)} />
+          <Tab label="问题" {...a11yProps(0)} />
+          <Tab label="回答" {...a11yProps(0)} />
+          <Tab label="NFTs" {...a11yProps(0)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -88,6 +99,7 @@ function Profile() {
 
   const [profile, setProfile] = React.useState({})
   const [questions, setQuestions] = React.useState([])
+  // const [answers, setAnswers] = React.useState([])
   const [loading, setLoading] = React.useState(false)
 
   const getUserDetails = async (_account) => {
@@ -98,6 +110,13 @@ function Profile() {
 
     setProfile(userDetailsResponse.data.user)
     setQuestions(userDetailsResponse.data.questions)
+    // setAnswers(userDetailsResponse.data.answers)
+
+  }
+
+  const transfer = async() =>{
+    if(!Services) return
+    const response = await Services.transfer(0, 0)
   }
 
   React.useEffect(async() => {
@@ -126,7 +145,7 @@ function Profile() {
               <Typography variant='h6' fontSize='1.3em'> <AccountCircleIcon/> {profile.name}</Typography>
               <Typography variant='h6' fontSize='1.3em'> <AccountBalanceWalletIcon/> {profile.account}</Typography>
               <Typography variant='h6' fontSize='1.3em'> <EventIcon/> {profile.joined_on}</Typography>
-              <Button variant='contained' startIcon={<CurrencyRupeeIcon/>} fontSize='1.5em' style={{marginTop: '2em'}}>PAY</Button>
+              <Button onClick={transfer} variant='contained' startIcon={<CurrencyRupeeIcon/>} fontSize='1.5em' style={{marginTop: '2em'}}>NFT TRANSFER</Button>
             </Box>
           </Grid>
         </Grid>

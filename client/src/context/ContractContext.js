@@ -204,6 +204,54 @@ function ContractContextProvider(props){
                 console.log('Error in tip question: ', err)
                 return { success: false, message: err.message }
             }
+        },
+
+        dividing_question_bonus_pool:async(_question_id) =>{
+            try{
+                if(!state.DeQuora) return { success:true, data:{}}
+                console.log(`Dividing question bonus pool${_question_id}`)
+                const dividingQuestionBonusPoolResponse = await state.DeQuora.methods.dividing_question_bonus_pool(_question_id).send({
+                    from: account,
+                    gas: 3000000
+                })
+                console.log(dividingQuestionBonusPoolResponse)
+                return { success: true, data:dividingQuestionBonusPoolResponse}
+            }catch(err){
+                console.log('Error in dividing question bonus pool: ', err)
+                return { success: false, message: err.message }
+            }
+        },
+
+        clean : async() =>{
+            try{
+                if(!state.DeQuora) return { success:true, data:{}}
+                console.log(`clean`)
+                const cleanResponse = await state.DeQuora.methods.clean().send({
+                    from: account,
+                    gas: 3000000
+                })
+                console.log(cleanResponse)
+                return { success: true, data:cleanResponse}
+            }catch(err){
+                console.log('Error in clean ', err)
+                return { success: false, message: err.message }
+            }
+        },
+
+        transfer :async(_to, _tokenId) =>{
+            try{
+                if(!state.DeQuora) return { success:true, data:{}}
+                console.log(`transfer ${_to, _tokenId}`)
+                const transferResponse = await state.DeQuora.methods.transfer(_to, _tokenId).send({
+                    from: account,
+                    gas: 3000000
+                })
+                console.log(transferResponse)
+                return { success: true, data:transferResponse}
+            }catch(err){
+                console.log('Error in transfer: ', err)
+                return { success: false, message: err.message }
+            }
         }
 
     }

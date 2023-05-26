@@ -403,7 +403,7 @@ contract DeQuora is ERC721 {
         return question;
     }
 
-    function dividing_question_bonus_pool(uint _question_id) public {
+    function dividing_question_bonus_pool(uint _question_id) public returns(Question memory){
         (Question memory question, , ) = get_question(_question_id);
         // 对即将过期的问题瓜分奖金
         // require(question.expire - 30 days <= block.timestamp); 
@@ -423,6 +423,8 @@ contract DeQuora is ERC721 {
         set_answer(_question_id,highest_liked_answer_id,answer);
         set_question(question, _question_id);
         emit question_bonus_divided(question);
+
+        return question;
     }
 
 

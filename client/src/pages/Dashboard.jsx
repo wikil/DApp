@@ -35,23 +35,27 @@ function Dashboard() {
   <>
     <Container maxWidth={false} className='dashboard'>
       <Grid container spacing={8} className="dashboard-top" justifyContent="center">
-        <Grid item lg={7} sm={12}>
+        <Grid item lg={8.5} sm={8.5}>
           <Typography variant="h3" className="dashboard-top-text">欢迎： <strong>{name}</strong> </Typography>
-          <Typography variant="p" fontSize="large">
+          {/* <Typography variant="p" fontSize="large">
           "信息就是力量。但就像所有力量一样，有些人只想占为己有。世界上所有的科学和文化遗产，已在书籍和期刊上发布了数个世纪，正渐渐地被少数私有的公司数字化并上锁。那些能够获取这些资源的人，你有责任将它与世界分享"
-          </Typography>
+          </Typography> */}
           <Typography variant="p" fontSize="large">
-          "书写出来并不是为了藏在高墙之后，而是为了向世界传播，激励和启发世人"
+          这是一个去中心化的问答社区，每个人都拥有创作的真正所有权, 你的点赞和打赏将会决定内容的生命期哦！
           </Typography>
+          {/* <Typography variant="p" fontSize="large">
+          "书写出来并不是为了藏在高墙之后，而是为了向世界传播，激励和启发世人"
+          </Typography> */}
         </Grid>
         {/* <Grid item lg={4} sm={12}> <DashboardTopVector className="dashboard-top-vector"></DashboardTopVector> </Grid> */}
       </Grid>
       <Container justifyContent='center' className='dashboard-mid' maxWidth="md">
         <Typography variant='h5' textAlign='center'>
-          有疑惑吗?
-          <Link href="/new" underline="none" fontWeight="bold" className="dashboard-mid-link"> 发起你的问题</Link>
-          <br/>
-          或者贡献你的智慧！
+          {/* 有疑惑吗? */}
+          <Button href="/new" fontSize='1.5em' variant='contained' underline="none" fontWeight="bold" className="dashboard-mid-link" > 发布问题</Button>
+          {/* <Link href="/new" underline="none" fontWeight="bold" className="dashboard-mid-link"> 发起你的问题</Link> */}
+          {/* <br/> */}
+          {/* 或者贡献你的智慧！ */}
         </Typography>
       </Container>
       <QuestionList></QuestionList>
