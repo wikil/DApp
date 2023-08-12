@@ -53,6 +53,7 @@ function Dashboard() {
         <Typography variant='h5' textAlign='center'>
           {/* 有疑惑吗? */}
           <Button href="/new" fontSize='1.5em' variant='contained' underline="none" fontWeight="bold" className="dashboard-mid-link" > 发布问题</Button>
+          <Button href="/" fontSize='1.5em'  underline="none" fontWeight="bold" className="dashboard-mid-link" > 清理一下</Button>
           {/* <Link href="/new" underline="none" fontWeight="bold" className="dashboard-mid-link"> 发起你的问题</Link> */}
           {/* <br/> */}
           {/* 或者贡献你的智慧！ */}

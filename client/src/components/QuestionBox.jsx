@@ -42,7 +42,7 @@ function QuestionBox({question}) {
             <Typography variant='p' fontSize='large' className='name'>{question.author_name}</Typography>
           </Link>
         </span>
-        <span fontSize='1.5em'><Button onClick={dividingQuestionBonusPool}> <ShareIcon/>瓜分赏金 {question.bonus_pool /1000000}</Button></span>
+        <span fontSize='1.5em'><Button onClick={dividingQuestionBonusPool}> <ShareIcon/>瓜分赏金 {question.bonus_pool /1000000} ETH</Button></span>
       </Container>
     </Container>
   )

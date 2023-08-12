@@ -9,7 +9,7 @@
 cd client && npm install --dev
 ```
 
-- Compile the contracts and deploy on **Ganache** lcoal testnet
+- Compile the contracts and deploy on **Ganache** local TestNet
 ```sh
 truffle deploy --reset
 ```
