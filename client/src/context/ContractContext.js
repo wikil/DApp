@@ -76,9 +76,7 @@ function ContractContextProvider(props){
                     gas: 3000000,
                     from: account
                 })
-
                 return { success: true, data: response }
-
             }catch (err) {
                 console.log("Error in creating question: \n", err)
                 return { success: false, message: err.message}
